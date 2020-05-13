@@ -19,7 +19,7 @@ const router = jsonServer.router(path.join(__dirname, "db.json"));
 // Can pass a limited number of options to this to override (some) defaults. See https://github.com/typicode/json-server#api
 const middlewares = jsonServer.defaults({
   // Display json-server's built in homepage when json-server starts.
-  static: "node_modules/json-server/dist"
+  static: "node_modules/json-server/dist",
 });
 
 // Set default middlewares (logger, static, cors and no-cache)
@@ -29,7 +29,7 @@ server.use(middlewares);
 server.use(jsonServer.bodyParser);
 
 // Simulate delay on all requests
-server.use(function(req, res, next) {
+server.use(function (req, res, next) {
   setTimeout(next, 0);
 });
 
@@ -44,12 +44,21 @@ server.use((req, res, next) => {
   next();
 });
 
-server.post("/courses/", function(req, res, next) {
+server.post("/courses/", function (req, res, next) {
   const error = validateCourse(req.body);
   if (error) {
     res.status(400).send(error);
   } else {
     req.body.slug = createSlug(req.body.title); // Generate a slug for new courses.
+    next();
+  }
+});
+server.post("/users/", function (req, res, next) {
+  const error = validateUser(req.body);
+  if (error) {
+    res.status(400).send(error);
+  } else {
+    //req.body.slug = createSlug(req.body.title); // Generate a slug for new courses.
     next();
   }
 });
@@ -77,5 +86,11 @@ function validateCourse(course) {
   if (!course.title) return "Title is required.";
   if (!course.authorId) return "Author is required.";
   if (!course.category) return "Category is required.";
+  return "";
+}
+function validateUser(user) {
+  if (!user.farmer) return "name is required.";
+  if (!user.number) return "username is required.";
+  if (!user.password) return "password is required.";
   return "";
 }

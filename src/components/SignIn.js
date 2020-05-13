@@ -1,40 +1,36 @@
 import React from "react";
 import Textinput from "./common/TextInput";
-import Select from "./common/Select";
-//import * as courseApi from "../api/courseApi";
 import { Link } from "react-router-dom";
 
-function CourseForm(props) {
-  const courseId = props.course.slug;
-  console.log(courseId);
+function SignIn(props) {
   return (
     <form onSubmit={props.onSubmit}>
       <Textinput
-        id="title"
-        label="Title"
+        id="farmer"
+        label="Farmer"
         onChange={props.onChange}
-        name="title"
+        name="farmer"
         className="form-control"
-        value={props.course.title}
-        error={props.errors.title}
+        value={props.user.farmer}
+        error={props.errors.farmer}
       />
-      <Select
-        id="author"
-        label="author"
-        name="authorId"
+      <Textinput
+        id="number"
+        label="Number"
+        name="number"
         className="form-control"
         onChange={props.onChange}
-        value={props.course.authorId}
-        error={props.errors.authorId}
+        value={props.user.number}
+        error={props.errors.number}
       />
 
       <Textinput
-        id="category"
-        label="Category"
-        name="category"
+        id="password"
+        label="Password"
+        name="password"
         onChange={props.onChange}
-        value={props.course.category}
-        error={props.errors.category}
+        value={props.user.password}
+        error={props.errors.password}
       />
 
       <input type="submit" value="Save" className="btn btn-primary" />
@@ -49,4 +45,4 @@ function CourseForm(props) {
   );
 }
 
-export default CourseForm;
+export default SignIn;

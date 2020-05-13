@@ -3,23 +3,28 @@ import React, { useState, useEffect } from "react";
 import CourseForm from "./CourseForm";
 import * as courseApi from "../api/courseApi";
 import { toast } from "react-toastify";
+//import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
+//import { Link } from "react-router-dom";
 const ManageCoursePage = (props) => {
   const [errors, setErrors] = useState({});
   const [course, setCourse] = useState({
     id: null,
     slug: "",
     title: "",
-    authorId: null,
+    authorId: "",
     category: "",
+    //name: "",
   });
+
   // edit course
   useEffect(() => {
     const slug = props.match.params.slug; //from the path course/slug
     if (slug) {
       courseApi.getCourseBySlug(slug).then((_course) => setCourse(_course));
     }
-  }, [props.match.params.slug]); // D'l e'lpendency array must be decleared
+  }, [props.match.params.slug]); // Dependency array must be decleared
 
   function handleChange({ target }) {
     setCourse({
@@ -48,6 +53,32 @@ const ManageCoursePage = (props) => {
       toast.success("Course saved");
     });
   }
+  const handleDelet = () => {
+    const courseId = course.id;
+    courseApi.deleteCourse(courseId).then(() => {
+      toast.success("Course Deleted");
+    });
+  };
+
+  /* const submit = () => {
+    confirmAlert({
+      title: "Confirm to submit",
+      message: "Are you sure to do this.",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => handleDelet(),
+        },
+        {
+          label: "No",
+          onClick: () => {
+            return;
+          },
+        },
+      ],
+    });
+  };*/
+
   return (
     <>
       <h2>Manage Course</h2>
@@ -56,6 +87,7 @@ const ManageCoursePage = (props) => {
         course={course}
         onChange={handleChange}
         onSubmit={handleSubmit}
+        handleDelete={handleDelet}
       />
     </>
   );

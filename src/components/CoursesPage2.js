@@ -24,7 +24,7 @@ class CoursesPage extends React.Component {
               return (
                 <tr key={course.id}>
                   <td>{course.title}</td>
-                  <td>{course.authorId}</td>
+                  <td>{course.name}</td>
                   <td>{course.category}</td>
                 </tr>
               );

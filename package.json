@@ -21,7 +21,7 @@
     "react-scripts": "3.4.1",
     "react-toastify": "^5.1.1",
     "react-uniqueid": "0.0.2",
-    "sequelize": "^5.21.7"
+    "sequelize": "^6.29.0"
   },
   "scripts": {
     "start": "run-p start:dev start:api",
